@@ -1,0 +1,575 @@
+SOURCE:
+
+[https://www.guru99.com/sql-server-variable.html](https://www.guru99.com/sql-server-variable.html)
+
+[https://stackoverflow.com/questions/860966/calculate-a-running-total-in-sql-server](https://stackoverflow.com/questions/860966/calculate-a-running-total-in-sql-server)
+
+[https://techtfq.com/blog/top-20-sql-interview-questions](https://techtfq.com/blog/top-20-sql-interview-questions)
+
+[https://www.talend.com/resources/what-is-data-mart/](https://www.talend.com/resources/what-is-data-mart/)
+
+[https://www.talend.com/resources/data-lake-vs-data-warehouse/](https://www.talend.com/resources/data-lake-vs-data-warehouse/)
+
+[https://stackoverflow.com/questions/20036905/difference-between-fact-table-and-dimension-table](https://stackoverflow.com/questions/20036905/difference-between-fact-table-and-dimension-table)
+
+Q: What is LIMIT operator in SQL?
+
+The  LIMIT clause is not part of standard SQL. It's supported as a vendor extension to SQL by MySQL, PostgreSQL, and SQLite.
+
+Q: What is LIKE operator?
+
+LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+
+Q: What is the difference between UNION and UNION ALL?
+
+UNION removes duplicate records (where all columns in the results are the same), UNION ALL does not.
+
+Q: Explain the meaning of Index?
+
+Indexes help retrieve information from the database faster and with higher efficiency. It enhances performance. A table can have multiple non-cluster indexes, but only 1 single clustered one. There are 3 types of indexes:
+
+1. Clustered index - reorders the table and searches for information with the use of key values
+2. Non clustered index -  maintains the order of the table
+3. Unique index - forbids fields to have duplicated values
+
+Q: What is a 'data warehouse' ?
+
+Data warehouse is a system used for data analysis and reporting. Data is DWs can be stored from various areas and sources and hence makes them central repositories of integrated data that is ready for usage.
+
+Q: What is the difference between data lake, data mart, data warehouse
+
+ Data Lake : 
+
+- vast pool of raw data
+- the purpose of the data is not yet determined
+- highly accessible and cheap to update
+
+Data warehouse:
+
+- contains structured and filtered data
+- created for a specific purpose
+- serves as the central store of data for the entire business
+- more complicated and costly to make changes
+- has many source systems
+- data is present for all business use cases
+
+Data mart:
+
+- contains structured and filtered data
+- can be created from existing data warehouses
+- data mart fulfills the request of a specific division or business function
+- it is easy to query a data mart than a data warehouse
+- has few source systems
+- data is present with respect to mainly one subject area
+
+Q: What are the types of data marts?
+
+1. Dependent data mart
+
+created from existing enterprise data warehouse
+
+1. Independent data mart
+
+stand alone system, created without the use of a data warehouse 
+
+1. Hybrid data mart
+
+combines data from an existing data warehouse and other operational source systems 
+
+Q: What are fact table and dimension table
+
+In data warehouse modelling, a start schema and a snowflake schema consists of Fact and Dimension tables.
+
+Fact table:
+
+- contains all the primary keys of the dimension and associated facts or measure (a property on which calculation can be made) like quantity sold, amount, average sales etc
+
+Dimension table:
+
+- provides descriptive information for all the measurements recorded in the fact table
+- dimensions are relatively small as compared to fact table
+- commonly used dimensions are people, products, place, time
+
+Q3: What recursive stored procedure is mainly used for?
+
+A recursive stored procedure is a procedure that will make the code calls itself until specific boundary condition is reached. It allows the programmers to use the same code a number of times
+
+Q5: What is the order of execution in SQL? FWGHSDOL ([https://sqlbolt.com/lesson/select_queries_order_of_execution](https://sqlbolt.com/lesson/select_queries_order_of_execution))
+
+1. FROM and JOINS
+
+The FROM clause, and subsequent JOINS are first executed to determine the total working set of data that is being queried. (WHAT ABOUT COMPLEX QUERIES?)
+
+This includes subqueries in this clause., and can cause temporary tables to be created under the hood containing all the columns and rows of the tables being joined. 
+
+1. WHERE
+
+Once we have the total working set of data, WHERE constraints are applied to the individual rows, and rows that do not satisfy the constraint are discarded. 
+
+Each of the constraints can only access columns directly from the tables requested in the FROM clause. 
+
+Aliases in the SELECT part of the query are not accessible in most databases since they may include expressions dependent on parts of the query that have not yet executed. 
+
+1. GROUP BY
+
+The remaining rows after the WHERE constraints are applied are then grouped based on common values in the column specified in the GROUP BY flause.
+
+As a result of the grouping, there will only be as many rows as there are unique values in that column. This means that you should only need to use this when you have aggregate functions in your query. 
+
+1. HAVING 
+
+If the query has a GROUP BY clause, then the constraints in the HAVING clause are then applied to the grouped rows, discard the groups rows that don't satisfy the constraint. 
+
+Like the WHERE clause, aliases are also not accessible from this step in most databases.
+
+1. SELECT
+
+Any expressions in the SELECT part of the query are finally computed.
+
+1. DISTINCT
+
+Of the remaining rows, rows with duplicate values in the column marked as DISTINCT will be discarded
+
+1. ORDER BY
+
+If an order is specified by the ORDER BY clause, the rows are then sorted by the specified data in either ascending or descending order. 
+
+Since all the expressions in the SELECT part of the query have been computed, you can reference aliases in this clause
+
+1. LIMIT/OFFSET 
+
+Finally, the rows that fall outside the range specified by the LIMIT and OFFSET are discarded, leaving the final set of rows to be returned from the query
+
+Q: What are DDL and DML languages? Give examples
+
+DDL - Data Definition Language
+
+To define the data you will need commands like CREATE, DROP, ALTER, TRUNCATE statements.
+
+DDL statements are used to create, remove or modify database objects like table.
+
+CREATE statement can be used to create any database objects like tables, views, functions, procedures, triggers etc.
+
+DROP statement can be used to remove the above mentioned database objects.
+
+ALTER statement can be used to modify the structure of a database objects.
+
+TRUNCATE statement to remove all the data from a table at once.  
+
+DML - Data Manipulation Language
+
+To manipulate you need commands like INSERT, UPDATE, DELETE, MERGE statements.
+
+DML statements are used to add, remove or modify data from database tables. 
+
+It is mandatory to run the COMMIT command after running a DML statement so as to save the changes to the database (some tools may have auto commit on so you don’t have to manually run the commit command)
+
+INSERT statement will add rows or records to a table.
+
+UPDATE statement will modify the data in the table.
+
+DELETE statement will remove one or multiple rows from a table.
+
+MERGE statement will either do an update or insert to a table based on the available data. If the data is present then it does an update. It data is not present then merge will do an insert. 
+
+DCL - Data Control Language 
+
+To control the access you need statements like GRANT, REVOKE.
+
+GRANT statements are used to provide access privileges to any database or schema
+
+REVOKE statements are used to remove access privileges to any database or schema
+
+TCL - Transaction Control Language
+
+To control the transaction you need statements like COMMIT, ROLLBACK, SAVEPOINT
+
+COMMIT statement permanently saves any open transactions in the current session to the database. By transaction, i mean any changes done to any database table using any of the DML statements like INSERT, UPDATE, DELETE and MERGE.
+
+ROLLBACK statement will remove (unsaved) any open transaction in the current session to the database. So all un committed transactions in the current session will be lost.
+
+SAVEPOINT statement can be used to create a specific pointer in your session and provide a name to this pointer. You can then either rollback or commit transactions only until this point (savepoint name) rather than committing or rollbacking all the transactions in the session.
+
+DQL -  Data Query Language 
+
+Includes only the SELECT statement. 
+
+SELECT statement is used to fetch and view data from the database.
+
+Q: What is the difference between DELETE and TRUNCATE statement?
+
+DELETE - to remove either few or all the records, it is a DML statement hence we will need to commit the transactions in order to save the changes to the database.
+
+TRUNCATE - to remove all the records, cannot have WHERE condition, it is a DDL statement hence no commit is required.
+
+EX.
+
+DELETE  FROM emp WHERE name = ‘Nitin’;  - - Delete records where name is Nitin
+
+COMMIT;
+
+DELETE FROM emp; - - Delete all records from emp table
+
+COMMIT;
+
+TRUNCATE  TABLE emp;  - - Delete all records, no commit is required. 
+
+If you drop a table then you have to run the DDL again.
+
+Q: Why do we use CASE statement in SQL?
+
+CASE statement is similar to IF ELSE statement from any other language. 
+
+Q: What is the difference between LEFT, RIGHT, FULL outer join and INNER join?
+
+Inner join - fetches only those records which are present in both the joined tables. Inner join can also be represented as Join.
+
+Left join - fetches all records from the left table. Left join can also be represented as Left Outer Join.
+
+Right join - fetches all records from the right table. Right join can also be represented as Right Outer Join.
+
+Full Join - fetches all records from the both left and right table. It is a combination of inner, left and right join. Full Join can also be represented as Full Outer Join.
+
+Self Join - when you join a table to itself. There is no keyword like SELF when doing this join. We just use the normal INNER join to do a self join. Just that instead of doing an inner join with two different table, we inner join the same table to itself. Just that these tables should have different alias name. Self join performs similar to Inner join. 
+
+Natural Join - Similar to inner join but we do not need to use the ON clause during the join. Meaning in a natural join we just specify the tables. We do not specify the columns based on which this join should work. By default when we use natural join, sql will join the two tables based on the common column names in these two  tables. So tables should have columns with same name and same data type.
+
+Cross Join - Joins all the records from the left table with all the records from the right table. Meaning the cross join is not based on matching any column. Whether there is a match or not, cross join will return records which is basically number of records in left table multiplied by number of records in right table. In other words, cross join returns a Cartesian product. 
+
+Q: What is the difference between DISTINCT and GROUP BY?
+
+DISTINCT - returns unique column values. If only 1 column is specified then its distinct value is shown. It more than 1 columns are specified then for that combination unique records will be shown
+
+SELECT DISTINCT name FROM employee; 
+
+SELECT DISTINCT name, age FROM employee;
+
+SELECT DISTINCT * FROM employee ; — check by running
+
+GROUP BY - groups together the data based on the columns specified in group by. Which will then return just one record for each unique value in the column specified in group by. In other words, group by can also be used to fetch unique records but this is not why group by clause is used for. The main purpose of group by clause is to perform some aggregation (using the aggregate functions like MIN, MAX, COUNT, SUM, AVG) 
+
+EG. SELECT name, COUNT(1) FROM employee GROUP BY name; - - group together the data from emp table based on name and then for each name value, it would count how many records have the same name. 
+
+Q: What are the rules to follow when using UNION operator?
+
+UNION - can be used to combine two different SQL queries. Duplicate records would not be returned.
+
+Both queries must return same number of columns. 
+
+The columns in both the queries must be in same order.
+
+Data type of all the columns in both queries must be same.
+
+In UNION ALL - Duplicates are included. It has “ALL” in the name.
+
+Q: What are aggregate functions?
+
+Returns a single value, can be used with GROUP BY claims or without it.
+
+SUM :
+
+SELECT SUM(salary) as Total_salary FROM employee; - - Don’t use group by
+
+SELECT deptid, SUM(salary) as total_salary_per_dept FROM employee GROUP BY deptid; - - Use group by
+
+Other examples are average, minimum, maximum, count  
+
+ 
+
+Q: What is the difference between rank, dense rank and row number?
+
+RANK - assign a rank to each row within each partitioned result set. In multiple rows have the same value then each of these rows will share the same rank. However the rank next rows will get skipped, meaning for each duplicate row, one rank value gets skipped.
+
+DENSE RANK - assign a rank to each row within each partitioned result set. If multiple rows have the same value then each of these rows will share the same rank. However the next rows will NOT get skipped. Dense rank function will never skip a rank.
+
+ROW NUMBER - assign a unique row number to every row within each partitioned result set. It does not matter if the rows are duplicate or not.
+
+Q: Can we use aggregate function as window function? 
+
+Yes, we can use aggregate function as a window function by using the OVER clause. Aggregate function will reduce the number of rows or records since they perform calculation of a set of row values to return a single value. 
+
+Whereas window function does not reduce the number of records.
+
+E.g. 1:
+
+SELECT SUM(salary) AS total_salary
+
+FROM managers;
+
+Output  - 24000 (using SUM as aggregate function returns just 1 record)
+
+E.g. 2:
+
+SELECT SUM(salary) over() AS total_salary
+
+FROM managers;
+
+Output  - 24000
+
+24000
+
+24000
+
+... (Using SUM as window function (with the over clause), does not reduce the number of records. It is not mandatory to use ORDER BY or PARTITION BY inside the OVER clause)
+
+Q: How can you convert a text into date format? Consider the given text as “31-01-2021” ?
+
+There are different date functions to convert text into date as per databases. 
+
+For MS sql server :
+
+SELECT CAST(’31-01-2021’ as DATE) as date_value;
+
+Q: Imagine there is a full_name column in a table which has values like “Elon Musk”, “Bill Gates” etc. So each full name has a first name, a space, and a last name. Which functions would you use to fetch only the first name from this full_name ?
+
+For MS SQL Server:
+
+We can use SUBSTRING() function to get a sub string from a given text based on the start and end position. And we can use CHARINDEX() function to find the position of a particular string in the given text.
+
+SELECT SUBSTRING(full_name, 1, CHARINDEX(’’, full_name) -1) as first_name;
+
+SUBSTRING(column_name, starting position, length you require)
+
+CHARINDEX(what are you looking for, column_name)
+
+NITIN KUMAR
+
+Q: What are subqueries?
+
+DEFINITION: A select query statement which is placed inside another select query is termed as a sub query. Also called inner query.
+
+The select query which holds the subquery can be termed as main query or outer query. 
+
+WHERE IT CAN COME: Subquery can also reside within INSERT, UPDATE, DELETE statement or inside another subquery.
+
+In a SELECT statement, subquery may occur in the SELECT, FROM or WHERE clause.
+
+ORDER OF EXECUTION : When a query statement containing subquery execute, the inner query or the subquery will execute first. The outer query will then use the result from the subquery while processing the outer query.
+
+Q: Is it good to have the same subquery multiple times in your query ?
+
+No, not a good practice.
+
+It can impact the query performance (since the same query would execute multiple times) and also becomes difficult t maintain.
+
+Rather use WITH clause. We can place the subquery just once inside the WITH clause and then use this multiple times in your query. This way SQL will execute the subquery only once (which is at the start of the query execution)
+
+Q: What is the difference between WHERE and HAVING clause?
+
+WHERE:
+
+To filter records from the table.
+
+Can specify join conditions between two tables in the where clause.
+
+If where and group by clause both are present, then the records will first get filtered based on the conditions mentioned in where clause before the data gets grouped as per the group by clause.
+
+HAVING:
+
+To filter records returned from the GROUP BY clause.
+
+If WHERE, GROUP BY and HAVING are present, then first the data gets filtered based on WHERE condition, only after this grouping of data takes place. Finally based on the conditions in having clause the grouped data again gets filtered. 
+
+Q: What are indexes? Why to use them?
+
+DEFINITION:
+
+INDEX is a database object which is applied on one or more columns of a table. 
+
+When a column (or list of columns) from the table is indexed, database creates a pointer to each value stored in that column. 
+
+This improves the query execution time since the database will have a more efficient way to find a particular value from the column based on its index.
+
+EXAMPLE:
+
+Imagine you have a table with one million records and there is an ID column in it along with many other columns. Let’s say you are given a task to write a SQL query which is expected to return just 100 records from this table. 
+
+Imagine if you did not create an index on this ID column then the SQL query you write will have to scan through all the one million records to find the desired 100 records. This is going to be a very slow and the performance of the query would take a blow.
+
+Now, let’s imagine you did create an index on the ID column, then SQL will have a pointer to every value stored in this column hence the SQL query you write will be much faster since the database will know where to find the 100 required records by referring to the index of this ID column.
+
+SUMMARY:
+
+Basically, index creates a pointer to each value in the column  which in turn helps in finding any specific value from this column in a much faster way.
+
+Please note, different indexes have different functionalities and will behave differently from each other but in a nutshell index is used to identify any value faster from the table columns.
+
+Q: What are the steps you would take to tune a SQL query?
+
+1. Check the SQL query
+
+All joins are correct and all filters are applied as intended.
+
+Check if any cartesian join is happening unintentionally.
+
+Avoid any repeated subqueries by using a WITH clause.
+
+If using tables with huge list of columns then make sure to only fetch columns which are required for the current query.
+
+If required check the columns used in join conditions are similar to how index are created. Just to make sure you give the best possible chance for the optimizer to use indexes.
+
+1. Check if index is created for the desired columns
+
+Make sure correct indexes are created on the desired columns. Following the correct type of indexes.
+
+Avoid creating unnecessary indexes.
+
+1. Check if table statistics are upto date
+
+Statistics will help to optimize to have the upto date information about the table which in turn helps the optimizer to create possible explain plan.
+
+Check if statistics are generated for all the used tables.
+
+If there were some updates to table structure or data then its better to create statistics again.
+
+1. Check the explain plan
+
+When we execute a SQL query, the first thing database does is to parse the query i.e. it will validate the query by looking for any syntax error and also by checking the validity of the tables and its columns.
+
+The next thing that happens is that the database optimizer will generate an explain plan for the query.
+
+Explain plan is something like a step by step guide on how the query execution will happen. Explain plain will mention which index to use and what sort of joins to follow. So if the explain plain is not using a particular index from a huge table then this is a god indication why the query performance may be slow.
+
+Q; What is the difference between primary key, unique key and foreign key.
+
+PK, UK, FK are constraints we can create on a table.
+
+PRIMARY KEY:
+
+When you make a column as primary key then this column will always have unique and distinct values.
+
+Duplicate and Null values are not allowed in PK.
+
+A table can have only 1 PK.
+
+Primary key can be created either on a single column or a group of columns.
+
+UNIQUE KEY:
+
+Column will always have unique or distinct values.
+
+Duplicate values are not allowed.
+
+Null values ARE allowed, which is the major difference between PK and UK.
+
+FOREIGN KEY:
+
+Used to create a master child kind of relationship between two tables. 
+
+When we make a column in a table as foreign key, this column will then have to be referenced from another column from some other table.
+
+Imagine we have two tables A and B. Both have just 1 column let’s call it COL_1. If we create a foreign key in COL_1 of table A which references the COL_1 from table B then the only values COL_1 in table A can have it the values which are already present in COL_1 of table B.
+
+This means table B becomes the master table and table A is the child table. COL_1 of table A can only have values which are already present in COL_1 of table B.
+
+Q: What is the difference between a view and a synonym ?
+
+VIEW:
+It is a database object, created from a SQL query.
+
+It is like giving a name to the results returned from a SQL query and storing it in the database as a view.
+
+If the query result changes then the data in view also changes. View is directly linked to the SQL query over which it was created.
+
+SYNONYM:
+It is an alias or an alternate name that you can provide to any database objects such as tables, views, sequences, procedures etc.
+
+Synonym is created for a single database object where view can be created on a query where the query may have been formed by multiple tables
+
+Q: Which can a function NOT be called from SELECT query?
+
+If the function includes DML operations like INSERT, UPDATE, DELETE then it cannot be called from a SELECT query. Because SELECT statement cannot change the state of the database.
+
+Q: What is a TRIGGER?
+
+It is a database object which is similar to a stored procedure. 
+
+It gets automatically invoked or executed when the specified event occurs in the database.
+
+The most common type of triggers are DML triggers, DDL triggers, and Database triggers (also called as Logon triggers)
+
+DML triggers are invoked when a DML operation (insert, update, delete) occurs on the respective table i.e. the table on which the trigger was created. Trigger can be configured to invoke either before the DM operation of after the DML operation.
+
+DDL triggers are invoked when a DDL operation (create, alter, drop) occurs on the respective table.
+
+Database trigger is invoked when the database session is established or shut down.
+
+Q: What is the difference between a view and a materialized view?
+
+Similar to views, materialized views are also database objects which are formed based on a SQL query however unlike views, the contents or data of the materialized views are periodically refreshed based on its configuration.
+
+The contents of view will get updated automatically when the underlying table (forming the query) data gets changed. However, materialized views can be configured to refresh its contents periodically or can be manually refreshed when needed. 
+
+Creating materialized views can be a very good approach for performance tuning especially when dealing with remote tables.
+
+Q: What is MERGE statement?
+
+Definition:
+
+Merge is part of the DML commands.
+
+It can be used to either perform INSERT or UPDATE based on the data in the table.
+
+Working:
+
+If the desired data is present then merge will update the records. If desired data is not present then merge will insert the records.
+
+Eg.
+
+If the managers and directors table have matching records based on the ID field the UPDATE will run. If there are no matching records then INSERT will be executed.
+
+MERGE INTO managers m
+
+ USING directors d ON (m.id = d.id)
+
+WHEN MATCHED THEN
+
+ UPDATE SET name = ‘TEST’
+
+WHEN NOT MATCHED THEN
+
+ INSERT VALUES (d.id, d.name, 0);
+
+Q:  Which function can be used to fetch yesterday’s date?
+
+Different RDBMS would have different date functions to add or subtract a day value from the current date. 
+In SQL Server  - GETDATE() returns today’s date
+
+SELECT DATEADD(DAY, -1, GETDATE()); - - Returns data and timestamp
+
+SELECT DATEAD(DAY, -1, CAST(GETDATE() AS DATE)); - - Return only date
+
+Q: What is the difference between a function and a procedure?
+
+Function should always return a value.
+
+Function can be called from a SELECT query.
+
+Function is generally used to perform some calculation and return a result.
+
+Procedure should not mandatorily return a value.
+
+Procedure cannot be called from a SELECT query.
+
+Procedure is generally used to implement some business logic.
+
+Q: What is PRAGMA AUTONOMOUS TRANSACTION?
+
+We can declare the stored program like a procedure as a PAT. Which means that any transaction committed or rolled back in this procedure will not impact any open transactions in the program from where this procedure was called from.
+
+E.g.
+
+Let’s imagine we have two procedures, pr_main and pr_log.
+
+PR_MAIN is a normal procedure.
+
+PR_LOG is declared as PAT.
+
+In the execution block of PR_MAIN, let’s imagine we do some DML operations like INSERT 100 records into a test table and then within the exception handling block of PR_MAIN we call the PR_LOG procedure. PR_LOG procedure will do some inserts into the log table and then do some commits.
+
+Now when we call the PR_MAIN procedure, if there was an unexpected exception then the PR_LOG procedure will get called. However, any commit done in the PR_LOG procedure will not impact the open transactions in PR_MAIN procedure because PR_LOG is declared as autonomous transaction so the commits and rollback within an autonomous transaction procedure only impacts its own transcations.
+
+It’s like autonomous transaction procedure will have its own database session so any transactions commit or rollback only impacts its internal database session.
+
+EXTRA:
+Rolling sum
