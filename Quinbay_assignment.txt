@@ -1,0 +1,82 @@
+--NOTE: SQL SERVER CODE 
+
+--DROP STATEMENT
+--Drop table order1;
+
+--TABLE CREATION
+USE TempDB
+GO
+CREATE TABLE order1(
+rest_name NVARCHAR(50),
+date_order DATE, 
+num_orders DECIMAL(10,2),
+)
+GO
+
+--VALUE INSERTION
+Insert Into order1 Values ('MTR', '20211225 10:34:09 AM', 50)
+Insert Into order1 Values ('MTR', '20211226 10:00:00 AM', 100)
+Insert Into order1 Values ('MTR', '20211227 10:00:00 AM', 200)
+Insert Into order1 Values ('MTR', '20211228 10:34:09 AM', 40)
+Insert Into order1 Values ('MTR', '20211229 10:34:09 AM', 70)
+Insert Into order1 Values ('MTR', '20211230 10:34:09 AM', 100)
+Insert Into order1 Values ('MTR', '20211231 10:34:09 AM', 200)
+Insert Into order1 Values ('MTR', '20220101 10:34:09 AM', 100)
+Insert Into order1 Values ('MTR', '20220102 10:34:09 AM', 300)
+Insert Into order1 Values ('MTR', '20220103 10:34:09 AM', 400)
+Insert Into order1 Values ('MTR', '20220104 10:34:09 AM', 100)
+Insert Into order1 Values ('FilterCoffee', '20211225 10:34:09 AM', 100)
+Insert Into order1 Values ('FilterCoffee', '20211226 10:00:00 AM', 200)
+Insert Into order1 Values ('FilterCoffee', '20211227 10:00:00 AM', 300)
+Insert Into order1 Values ('FilterCoffee', '20211228 10:34:09 AM', 100)
+Insert Into order1 Values ('FilterCoffee', '20211229 10:34:09 AM', 50)
+Insert Into order1 Values ('FilterCoffee', '20211230 10:34:09 AM', 100)
+Insert Into order1 Values ('FilterCoffee', '20211231 10:34:09 AM', 200)
+Insert Into order1 Values ('FilterCoffee', '20220101 10:34:09 AM', 300)
+Insert Into order1 Values ('FilterCoffee', '20220102 10:34:09 AM', 400)
+Insert Into order1 Values ('FilterCoffee', '20220103 10:34:09 AM', 100)
+Insert Into order1 Values ('FilterCoffee', '20220104 10:34:09 AM', 100)
+Insert Into order1 Values ('Dhp', '20211225 10:34:09 AM', 500)
+Insert Into order1 Values ('Dhp', '20211226 10:00:00 AM', 1000)
+Insert Into order1 Values ('Dhp', '20211227 10:00:00 AM', 500)
+Insert Into order1 Values ('Dhp', '20211228 10:34:09 AM', 100)
+Insert Into order1 Values ('Dhp', '20211229 10:34:09 AM', 200)
+Insert Into order1 Values ('Dhp', '20211230 10:34:09 AM', 400)
+Insert Into order1 Values ('Dhp', '20211231 10:34:09 AM', 700)
+Insert Into order1 Values ('Dhp', '20220101 10:34:09 AM', 800)
+Insert Into order1 Values ('Dhp', '20220102 10:34:09 AM', 800)
+Insert Into order1 Values ('Dhp', '20220103 10:34:09 AM', 900)
+Insert Into order1 Values ('Dhp', '20220104 10:34:09 AM', 1000)
+
+
+--GENERAL QUERY
+SELECT * FROM order1;
+
+
+--CALCULATING 
+--1.PER DAY CHANGE 
+--2.TODAY'S CHANGE WRT NUMBER OF ORDERS WHICH HAPPENED 2 DAYS EARLIER 
+
+SELECT  
+	rest_name,
+	date_order,
+	num_orders,
+	CAST(percent_day_chng AS DECIMAL(10,2))  as percent_day_chng, --to reduce the number of digits after decimal to 2
+	CAST(percent_2_days_chng AS DECIMAL(10,2))  as percent_2_days_chng --to reduce the number of digits after decimal to 2
+FROM
+(
+SELECT 
+	rest_name, 
+	date_order, 
+	num_orders,
+
+	--for comparison with yesterday
+	LAG(num_orders) OVER (PARTITION BY rest_name ORDER BY date_order) AS lag_order_value, --replaced lead function with lag function 
+	(num_orders - LAG(num_orders) OVER (PARTITION BY rest_name ORDER BY date_order))/ LAG(num_orders) OVER (PARTITION BY rest_name ORDER BY date_order) * 100  AS percent_day_chng,
+
+	--for comparision with day before yesterday
+	LAG(num_orders,2) OVER (PARTITION BY rest_name ORDER BY date_order) AS lag_2nd_order_value, 
+	(num_orders - LAG(num_orders,2) OVER (PARTITION BY rest_name ORDER BY date_order))/ LAG(num_orders,2) OVER (PARTITION BY rest_name ORDER BY date_order) * 100  AS percent_2_days_chng
+
+FROM order1)
+sda;
