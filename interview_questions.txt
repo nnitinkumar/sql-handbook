@@ -1,4 +1,4 @@
---NOTE: SQL SERVER CODE 
+--Q: Calculate daily percentage change and percentage change wrt day before yesterday
 
 --DROP STATEMENT
 --Drop table order1;
@@ -80,3 +80,52 @@ SELECT
 
 FROM order1)
 sda;
+
+----------------------------------------------------------------------------------------------------
+--Q: PIVOT the table
+
+
+--DROP STATEMENT
+--Drop table topivot;
+
+--TABLE CREATION
+USE TempDB
+GO
+CREATE TABLE topivot
+(
+storenum INT, 
+weeknum INT,   
+xorder INT
+)
+GO
+
+--VALUE INSERTION
+Insert Into topivot values (102, 1, 96)
+Insert Into topivot values (101, 1, 138)
+Insert Into topivot values (105, 1, 37)
+Insert Into topivot values (109, 1, 59)
+Insert Into topivot values (101, 2, 282)
+Insert Into topivot values (102, 2, 212)
+Insert Into topivot values (105, 2, 78)
+Insert Into topivot values (109, 2, 97)
+Insert Into topivot values (105, 3, 60)
+Insert Into topivot values (102, 3, 123)
+Insert Into topivot values (101, 3, 220)
+Insert Into topivot values (109, 3, 87)
+
+--Pivot the table
+SELECT * 
+FROM
+(
+SELECT storenum, weeknum, xorder 
+FROM topivot 
+) src
+PIVOT
+(
+  sum(xorder)
+  for weeknum in ([1], [2], [3])
+) piv;
+
+
+
+
