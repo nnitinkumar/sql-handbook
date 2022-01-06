@@ -14,6 +14,8 @@ SOURCE:
 
 [https://www.geeksforgeeks.org/difference-between-where-and-having-clause-in-sql/]
 
+[https://stackoverflow.com/questions/2726657/inner-join-vs-left-join-performance-in-sql-server]
+
 Q: What is LIMIT operator in SQL?
 
 The  LIMIT clause is not part of standard SQL. It's supported as a vendor extension to SQL by MySQL, PostgreSQL, and SQLite.
@@ -575,6 +577,7 @@ It’s like autonomous transaction procedure will have its own database session 
 
 
 Q: What executes fast between INNER JOIN and LEFT JOIN?
+https://stackoverflow.com/questions/2726657/inner-join-vs-left-join-performance-in-sql-server
 
 Q: What are the differences between WHERE and HAVING clause?
  WHERE:
@@ -596,4 +599,4 @@ Q: What are the differences between WHERE and HAVING clause?
 7. Is is used with multiple row function like SUM, COUNT etc
 
 Q: Which executes first JOIN or WHERE?
-
+A join condition executes first.
