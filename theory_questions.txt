@@ -12,6 +12,8 @@ SOURCE:
 
 [https://stackoverflow.com/questions/20036905/difference-between-fact-table-and-dimension-table](https://stackoverflow.com/questions/20036905/difference-between-fact-table-and-dimension-table)
 
+[https://www.geeksforgeeks.org/difference-between-where-and-having-clause-in-sql/]
+
 Q: What is LIMIT operator in SQL?
 
 The  LIMIT clause is not part of standard SQL. It's supported as a vendor extension to SQL by MySQL, PostgreSQL, and SQLite.
@@ -68,11 +70,11 @@ Q: What are the types of data marts?
 
 created from existing enterprise data warehouse
 
-1. Independent data mart
+2. Independent data mart
 
 stand alone system, created without the use of a data warehouse 
 
-1. Hybrid data mart
+3. Hybrid data mart
 
 combines data from an existing data warehouse and other operational source systems 
 
@@ -102,7 +104,7 @@ The FROM clause, and subsequent JOINS are first executed to determine the total 
 
 This includes subqueries in this clause., and can cause temporary tables to be created under the hood containing all the columns and rows of the tables being joined. 
 
-1. WHERE
+2. WHERE
 
 Once we have the total working set of data, WHERE constraints are applied to the individual rows, and rows that do not satisfy the constraint are discarded. 
 
@@ -110,33 +112,33 @@ Each of the constraints can only access columns directly from the tables request
 
 Aliases in the SELECT part of the query are not accessible in most databases since they may include expressions dependent on parts of the query that have not yet executed. 
 
-1. GROUP BY
+3. GROUP BY
 
 The remaining rows after the WHERE constraints are applied are then grouped based on common values in the column specified in the GROUP BY flause.
 
 As a result of the grouping, there will only be as many rows as there are unique values in that column. This means that you should only need to use this when you have aggregate functions in your query. 
 
-1. HAVING 
+4. HAVING 
 
 If the query has a GROUP BY clause, then the constraints in the HAVING clause are then applied to the grouped rows, discard the groups rows that don't satisfy the constraint. 
 
 Like the WHERE clause, aliases are also not accessible from this step in most databases.
 
-1. SELECT
+5. SELECT
 
 Any expressions in the SELECT part of the query are finally computed.
 
-1. DISTINCT
+6. DISTINCT
 
 Of the remaining rows, rows with duplicate values in the column marked as DISTINCT will be discarded
 
-1. ORDER BY
+7. ORDER BY
 
 If an order is specified by the ORDER BY clause, the rows are then sorted by the specified data in either ascending or descending order. 
 
 Since all the expressions in the SELECT part of the query have been computed, you can reference aliases in this clause
 
-1. LIMIT/OFFSET 
+8. LIMIT/OFFSET 
 
 Finally, the rows that fall outside the range specified by the LIMIT and OFFSET are discarded, leaving the final set of rows to be returned from the query
 
@@ -571,5 +573,27 @@ Now when we call the PR_MAIN procedure, if there was an unexpected exception the
 
 It’s like autonomous transaction procedure will have its own database session so any transactions commit or rollback only impacts its internal database session.
 
-EXTRA:
-Rolling sum
+
+Q: What executes fast between INNER JOIN and LEFT JOIN?
+
+Q: What are the differences between WHERE and HAVING clause?
+ WHERE:
+1. WHERE clause is used to filter the records based on specified condition
+2. It can be used without GROUP BY clause
+3. It implements in row operations
+4. It cannot contain aggregate function
+5. It can be used with SELECT, UPDATE, DELETE statement
+6. It is used before GROUP BY clause
+7. It is used with single row function like UPPER, LOWER etc
+
+ HAVING:
+1. HAVING clause is used to filter record from the groups based on specified condition
+2. It cannot be used without GROUP BY clause
+3. It implements in column operation
+4. It can contain aggregate function
+5. It can be used only with SELECT statement
+6. It is used after GROUP BY clause
+7. Is is used with multiple row function like SUM, COUNT etc
+
+Q: Which executes first JOIN or WHERE?
+
