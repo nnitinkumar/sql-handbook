@@ -577,7 +577,7 @@ It’s like autonomous transaction procedure will have its own database session 
 
 
 Q: What executes fast between INNER JOIN and LEFT JOIN?
-https://stackoverflow.com/questions/2726657/inner-join-vs-left-join-performance-in-sql-server
+(https://stackoverflow.com/questions/2726657/inner-join-vs-left-join-performance-in-sql-server)
 
 Q: What are the differences between WHERE and HAVING clause?
  WHERE:
@@ -600,3 +600,11 @@ Q: What are the differences between WHERE and HAVING clause?
 
 Q: Which executes first JOIN or WHERE?
 A join condition executes first.
+
+Q: What is the difference between JOIN and INNER JOIN?
+They are functionally equivalent, but INNER JOIN can be a bit clearer to read, especially if the query has
+other types of joins (i.e. LEFT, RIGHT or CROSS) included in it.
+It is also known as syntactic sugar (In computer science, syntactic sugar is syntax within a programming
+language that is designed to make things easier to read or to express. Ability to omit INNER falls under this definition)
+(https://stackoverflow.com/questions/565620/difference-between-join-and-inner-join?rq=1)
+
