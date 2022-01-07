@@ -16,6 +16,8 @@ SOURCE:
 
 [https://stackoverflow.com/questions/2726657/inner-join-vs-left-join-performance-in-sql-server]
 
+[https://stackoverflow.com/questions/565620/difference-between-join-and-inner-join?rq=1]
+
 Q: What is LIMIT operator in SQL?
 
 The  LIMIT clause is not part of standard SQL. It's supported as a vendor extension to SQL by MySQL, PostgreSQL, and SQLite.
