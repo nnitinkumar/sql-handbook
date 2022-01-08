@@ -126,6 +126,59 @@ PIVOT
   for weeknum in ([1], [2], [3])
 ) piv;
 
+----------------------------------------------------------------------------------------------------
+
+--Q: What is the result of join where values are same?
+USE TempDB
+GO
+CREATE TABLE Table_same_value_join_1(
+Col1 INT,
+Col2 INT 
+)
+GO
+--Drop table Table_same_value_join_1;
+
+CREATE TABLE Table_same_value_join_2(
+Col1 INT,
+Col2 INT 
+)
+GO
+--Drop table Table_same_value_join_2;
+
+
+Insert Into Table_same_value_join_1 Values (1, 1)
+Insert Into Table_same_value_join_1 Values (1, 1)
+Insert Into Table_same_value_join_1 Values (1, 1)
+
+
+Insert Into Table_same_value_join_2 Values (1, 1)
+Insert Into Table_same_value_join_2 Values (1, 1)
+
+
+
+select * from Table_same_value_join_1;
+select * from Table_same_value_join_2;
+
+--Left join
+select * from 
+Table_same_value_join_1 T1
+left join Table_same_value_join_2 T2
+on T1.Col1 = T2.Col1;
+
+
+--Right join
+select * from 
+Table_same_value_join_1 T1
+right join Table_same_value_join_2 T2
+on T1.Col1 = T2.Col1;
+
+--inner join
+select * from 
+Table_same_value_join_1 T1
+inner join Table_same_value_join_2 T2
+on T1.Col1 = T2.Col1;
+
+--EVERY RESULT IS SAME
 
 
 
