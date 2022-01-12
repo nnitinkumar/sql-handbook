@@ -613,3 +613,12 @@ language that is designed to make things easier to read or to express. Ability t
 Q: What are SQL variables?
 Syntax -> DECLARE { @LOCAL_VARIABLE data_type [ = value ] }
 
+1. DECLARE statement to declare a variable
+2. Specify the name and start with @
+3. Define the data type
+4. Value argument is optional, if not given any value it is initialized as null
+
+Eg.1
+DECLARE @TestVariable AS VARCHAR(10) = 'Save our planet'
+PRINT @TestVariable
+
