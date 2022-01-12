@@ -610,3 +610,6 @@ It is also known as syntactic sugar (In computer science, syntactic sugar is syn
 language that is designed to make things easier to read or to express. Ability to omit INNER falls under this definition)
 (https://stackoverflow.com/questions/565620/difference-between-join-and-inner-join?rq=1)
 
+Q: What are SQL variables?
+Syntax -> DECLARE { @LOCAL_VARIABLE data_type [ = value ] }
+
