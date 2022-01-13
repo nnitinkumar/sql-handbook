@@ -182,7 +182,7 @@ on T1.Col1 = T2.Col1;
 
 ----------------------------------------------------------------------------------------------------
 
---Q
+--Q: Find manager's name with 5 or more subordinates
 
 USE TempDB
 GO
@@ -194,6 +194,7 @@ mgrid INT,
 salary INT
 )
 GO
+
 --Drop table employee_dept;
 
 Insert Into employee_dept Values (1, 'Purushottam', 'Walmart', 2, 50000)
@@ -207,7 +208,32 @@ Insert Into employee_dept Values (6, 'Alokesh', 'THD', null, 100000)
 Insert Into employee_dept Values (7, 'Priyam', 'Suncorp', 8, 50000)
 Insert Into employee_dept Values (8, 'Nitin', 'Suncorp', 9, 75000)
 Insert Into employee_dept Values (9, 'Anshuman', 'Suncorp', null, 100000)
+Insert Into employee_dept Values (10,'Kritika', 'Suncorp', 9, 100000)
+Insert Into employee_dept Values (11,'Sagar', 'Suncorp', 9, 100000)
+Insert Into employee_dept Values (12,'Sharath', 'Suncorp', 9, 100000)
+Insert Into employee_dept Values (13,'Kalai', 'Suncorp', 9, 100000)
+Insert Into employee_dept Values (14,'Advaith', 'Suncorp', 9, 100000)
 
 
-select * from employee_dept ;
+select * from employee_dept;
+
+with CTE_1 as 
+(
+select 
+E1.EmpName as ManagerName, --Look at joining key's table before giving alias. Table name giving Mrg id will retrieve Emp name
+E2.EmpName as EmployeeName 
+
+from employee_dept E1
+inner join employee_dept E2
+on E1.EmpId  = E2.mgrid  --Alias of manager and employee should be exchanged to extract Emp Name and Mgr Name 
+)
+
+select ManagerName
+from CTE_1 C1
+group by ManagerName
+having count(distinct EmployeeName) > 5 --Cannot use WHERE clause, group by Manager Name as it is repetitive and count distinct of Emp Name
+
+;
+
+
 
