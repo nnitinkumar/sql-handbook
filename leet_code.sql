@@ -61,69 +61,18 @@ where rn >1;
 
 /* Write your T-SQL query statement below */
 
-with cte_1 as
-(
-select 
-    E2.name as EmpName,
-    E1.name as MgrName,
-    E2.salary as EmpSalary,
-    E1.salary as MgrSalary
-from 
-Employee E1
-inner join Employee E2
-on E1.id = E2.managerId
-)
-select 
-    EmpName
-from cte_1
-where EmpSalary > MgrSalary
-
-;
-
-/* Write your T-SQL query statement below */
-
-/*
-with cte_1 as
-(
-select 
-    --E2.name as Employee,
-    E2.name as Employee,
-    --E1.name as MgrName,
-    E2.salary as EmpSalary,
-    E1.salary as MgrSalary
-from 
-Employee E1
-inner join Employee E2
-on E1.id = E2.managerId
-)
-select 
-    Employee
-from cte_1
-where EmpSalary > MgrSalary
-
-;
-*/
-
-/*
-select 
-    --E2.name as Employee,
-    E2.name as Employee
-    --E1.name as MgrName,
-    --E2.salary as EmpSalary,
-    --E1.salary as MgrSalary
-from 
-Employee E1
-inner join Employee E2
-on E1.id = E2.managerId
-where E2.salary > E1.salary;
-*/
 
 select 
-    a.Name as Employee
-from 
-Employee a 
-inner join Employee b 
-on a.ManagerId=b.Id
-where a.Salary>b.Salary;
+    E1.name as Employee 
+--E2.name will give wrong result because emp details are coming from E1
 
+from Employee E1
 
+inner join Employee E2  
+--inner join or left join both fetch the same result 
+
+on E1.managerId = E2.Id 
+--E1.id = E2.managerId will give wrong result, match manager id from E1 and emp id from E2
+
+where E1.salary > E2.salary; 
+--E2.salary > E1.salary will fetch wrong result, compare emp E1 salary with E2 manager salary 
