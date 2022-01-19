@@ -236,4 +236,24 @@ having count(distinct EmployeeName) > 5 --Cannot use WHERE clause, group by Mana
 ;
 
 
+------------------------------------------------------
+
+Q: profit loss
+
+
+with t as
+(select s1.stock_name, s1.operation, sum(s1.price) sum
+from stocks s1 
+group by s1.stock_name, s1.operation)
+
+
+,t2 as
+(select t1.stock_name, 
+case when t1.operation= 'buy' then t1.sum end as buy,
+case when t1.operation= 'sell' then t1.sum end as sell
+from t t1)
+
+select t2.stock_name, (sum(t2.sell)- sum(t2.buy)) as capital_gain_loss
+from t2
+group by t2.stock_name
 
