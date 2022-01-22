@@ -622,3 +622,21 @@ Eg.1
 DECLARE @TestVariable AS VARCHAR(10) = 'Save our planet'
 PRINT @TestVariable
 
+Q: What are different types of keys in DBMS?
+
+1. Primary key
+2. Foreign key
+3. Super key
+4. Surrogate key  
+5. Alternate key
+6. Candidate key
+7. Compound key
+8. Composite key
+
+Q: Why we need a key?
+
+1. Keys help in identifying any row of data in a table. In real world application, a table could contain thousand of records, moreover the records could be duplicated. Keys help in uniquely identifying a table’s record
+2. Allows you to establish relationship between tables
+3. Helps you to enforce identity and integrity in the relationship
+
+
