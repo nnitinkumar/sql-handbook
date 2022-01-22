@@ -96,3 +96,43 @@ vs.total_views is not null and
 vs.total_unique_views is not null and 
 (ss.total_submissions + ss.total_accepted_submissions + vs.total_views + vs.total_unique_views) >0
 ;
+
+
+--Q: Draw The Triangle 1
+
+DECLARE @var int               -- Declare
+SELECT @var = 20               -- Initialization
+WHILE @var > 0                 -- condition
+BEGIN                          -- Begin
+PRINT replicate('* ', @var)    -- Print
+SET @var = @var - 1            -- decrement
+END
+
+--Q: Draw The Triangle 2
+
+DECLARE @var int               -- Declare
+SELECT @var = 1               -- Initialization
+WHILE @var <= 20               -- condition
+BEGIN                          -- Begin
+PRINT replicate('* ', @var)    -- Print
+SET @var = @var + 1            -- decrement
+END
+
+
+--Q: Print prime numbers
+
+DECLARE @range_start int = 3;
+DECLARE @range_end int = 1000;
+
+-DROP table prime_numbers;
+CREATE TABLE prime_numbers (n int);
+INSERT INTO prime_numbers VALUES(2);
+WHILE (@range_start < @range_end)
+BEGIN
+IF (SELECT COUNT(*) FROM prime_numbers WHERE @range_start % n = 0) = 0
+INSERT INTO prime_numbers VALUES (@range_start);
+ELSE
+SET @range_start = @range_start + 1;
+END
+
+SELECT string_agg(n, '&') FROM prime_numbers;
