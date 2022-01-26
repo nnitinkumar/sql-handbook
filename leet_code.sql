@@ -76,3 +76,38 @@ on E1.managerId = E2.Id
 
 where E1.salary > E2.salary; 
 --E2.salary > E1.salary will fetch wrong result, compare emp E1 salary with E2 manager salary 
+
+
+--185 : Department top three salaries
+
+--Table 1: Employee - id, name, salary, departmentId
+
+/*
+Write a query to find the employees who are high earnrers
+in each dept. 
+A high earner in a dept is an emp who has a salary
+in top three unique salaries for that department.
+
+Return the result table in any order. 
+*/
+
+/* Write your T-SQL query statement below */
+
+with cte_1 as
+(
+select 
+	D.name as Department,	
+	E.name as Employee,
+	E.salary as Salary,
+	dense_rank() over (partition by E.DepartmentId order by E.salary desc) as rn
+from employee E
+left join Department D 
+on E.departmentId = D.Id
+)
+
+select 
+	Department, 
+	Employee, 
+	Salary 
+from cte_1
+where rn in (1,2,3);
