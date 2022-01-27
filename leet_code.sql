@@ -111,3 +111,40 @@ select
 	Salary 
 from cte_1
 where rn in (1,2,3);
+
+
+--262. Trips and Users
+
+--Table 1: Trips - id, client_id, driver_id, city_id, status, request_at
+--Table 2: Users - users_id, banned, role 
+/*
+Write a sql query
+find the cancellation rate of requests with unbanned users, 
+(both client and driver must not be banned) 
+each day between "2013-10-01" and "2013-10-03"
+round cancellation rate to two decimal points 
+return the result table in any order  
+
+The cancellation rate = dividing the number of cancelled (by client or driver) requests
+with unbanned users / total number of requests with  unbanned users on that day
+
+*/
+
+
+--176. Second highest salary
+
+--Table1: Employee - id, salary
+
+/* Write your T-SQL query statement below */
+
+
+with cte_1 as
+(
+select id, salary,
+dense_rank() over (order by salary desc) as rn
+from Employee
+)
+
+select isnull(salary,null) as SecondHighestSalary
+from cte_1
+where rn = 2;
