@@ -256,4 +256,313 @@ from t t1)
 select t2.stock_name, (sum(t2.sell)- sum(t2.buy)) as capital_gain_loss
 from t2
 group by t2.stock_name
+-------------------------------------------------------
+
+Q: Normal join
+
+
+USE TempDB
+GO
+CREATE TABLE Table1(
+Col1 INT PRIMARY KEY,
+Col2 NVARCHAR(10)
+)
+GO
+--Drop table Table1;
+
+CREATE TABLE Table1a(
+Col1 INT PRIMARY KEY,
+Col2 NVARCHAR(10)
+)
+GO
+--Drop table Table1a;
+
+CREATE TABLE Table2(
+Col1 INT PRIMARY KEY,
+Col2 NVARCHAR(10)
+)
+GO
+--Drop table Table2;
+
+
+Insert Into Table1 Values (1, 'a')
+Insert Into Table1 Values (2, null)
+Insert Into Table1 Values (3, ' ')
+Insert Into Table1 Values (4, 'b')
+Insert Into Table1 Values (5, 'c')
+Insert Into Table1 Values (6, 'd')
+Insert Into Table1 Values (7, 'e')
+Insert Into Table1 Values (8, 'f')
+
+select * from Table1;
+
+Insert Into Table1a Values (1, 'b')
+Insert Into Table1a Values (2, 'g')
+Insert Into Table1a Values (3, 'h')
+Insert Into Table1a Values (4, 'a')
+Insert Into Table1a Values (5, 'c')
+Insert Into Table1a Values (6, 'd')
+Insert Into Table1a Values (7, 'e')
+Insert Into Table1a Values (8, 'f')
+
+select * from table1a;
+
+Insert Into Table2 Values (1, 'a')
+Insert Into Table2 Values (2, 'g')
+Insert Into Table2 Values (3, 'h')
+Insert Into Table2 Values (4, 'b')
+Insert Into Table2 Values (5, 'c')
+Insert Into Table2 Values (6, 'd')
+Insert Into Table2 Values (7, 'e')
+Insert Into Table2 Values (8, 'f')
+
+select * from Table2;
+
+--INNER JOIN 
+select * from Table1;
+select * from Table2;
+
+select T1.Col1 as T1Col1,
+T1.Col2 as T1Col2,
+T2.Col1 as T2Col1,
+T2.Col2 as T2Col2
+
+from Table1 T1
+inner join Table2 T2
+on T1.Col2 = T2.Col2;
+
+--LEFT JOIN eg1
+select * from Table1;
+select * from Table2;
+
+select T1.Col1 as T1Col1,
+T1.Col2 as T1Col2,
+T2.Col1 as T2Col1,
+T2.Col2 as T2Col2
+
+from Table1 T1
+left join Table2 T2
+on T1.Col2 = T2.Col2;
+
+
+--LEFT JOIN eg2
+select * from Table1a;
+select * from Table2;
+
+select T1.Col1 as T1Col1,
+T1.Col2 as T1Col2,
+T2.Col1 as T2Col1,
+T2.Col2 as T2Col2
+
+from Table1a T1
+left join Table2 T2
+on T1.Col2 = T2.Col2;
+
+
+--RIGHT JOIN
+select * from Table1;
+select * from Table2;
+
+select T1.Col1 as T1Col1,
+T1.Col2 as T1Col2,
+T2.Col1 as T2Col1,
+T2.Col2 as T2Col2
+
+from Table1 T1
+right join Table2 T2
+on T1.Col2 = T2.Col2;
+
+-------------------------------------------------------
+
+Q: Regex in sql (ms sql)
+
+USE TempDB
+GO
+CREATE TABLE teleco(
+id int PRIMARY KEY,
+name NVARCHAR(10),
+phonenum bigint
+)
+GO
+
+--drop table teleco ;
+
+Insert Into teleco Values (1, 'nitin', 9179900360)
+Insert Into teleco Values (2, 'prashant', 9179131425)
+Insert Into teleco Values (3, 'anjali', 9179906456)
+
+
+select * from teleco;
+
+SELECT REGEXP_REPLACE(substring(PhoneNum, 5), '[0-9]', 'X')
+from teleco ;
+
+
+--Q6: Min, Max, Count, Avg, Sum
+
+SELECT 
+MIN(Age) as Minimum_age
+,MAX(Age) as Maximum_age
+,COUNT(Age) as Count_of_age
+,AVG(Age) as Average_age
+,SUM(Age) as Sum_of_age
+FROM Win_Func_Practice;
+
+
+-------------------------------------------------------
+
+Q: Usage of LIKE operator and WILDCARD 
+
+
+DROP TABLE Win_Func_Practice
+CREATE TABLE Win_Func_Practice
+(
+Sno int,
+FirstName varchar(25),
+State varchar(5),
+Weight int,
+Age int,
+PersonID int
+);
+
+INSERT INTO Win_Func_Practice VALUES (1,'Johanne','A',65,24,1)
+INSERT INTO Win_Func_Practice VALUES (2,'Tihomir','B',82,35,2)
+INSERT INTO Win_Func_Practice VALUES (3,'Bartomeu','C',89,30,3)
+INSERT INTO Win_Func_Practice VALUES (4,'Shirli','A',65,24,1)
+INSERT INTO Win_Func_Practice VALUES (5,'Amirah','B',52,24,2)
+INSERT INTO Win_Func_Practice VALUES (6,'Aminath','C',69,42,3)
+INSERT INTO Win_Func_Practice VALUES (7,'Borghildur','A',50,45,1)
+INSERT INTO Win_Func_Practice VALUES (8,'Kleisthenes','B',84,34,2)
+INSERT INTO Win_Func_Practice VALUES (9,'Gisbert','C',50,42,3)
+INSERT INTO Win_Func_Practice VALUES (10,'Frodo','A',84,21,1)
+INSERT INTO Win_Func_Practice VALUES (11,'Quintilianus','B',60,33,2)
+INSERT INTO Win_Func_Practice VALUES (12,'Leonid','C',57,44,3)
+INSERT INTO Win_Func_Practice VALUES (13,'Hikmat','A',45,42,1)
+INSERT INTO Win_Func_Practice VALUES (14,'Eliou','B',53,36,2)
+INSERT INTO Win_Func_Practice VALUES (15,'Edorta','C',72,27,3)
+INSERT INTO Win_Func_Practice VALUES (16,'Eliou','A',54,36,2)
+INSERT INTO Win_Func_Practice VALUES (17,'Eliou','C',55,36,2)
+INSERT INTO Win_Func_Practice VALUES (18,'Eliou','',56,36,2)
+INSERT INTO Win_Func_Practice VALUES (19,'Eliou', NULL,56,36,2)
+
+
+SELECT * 
+FROM Win_Func_Practice
+WHERE 
+--FirstName LIKE 'a%' --Starts with A or a
+--FirstName LIKE '%a' --Ends with A or a
+--FirstName LIKE '%o%' --Contains 'o' at any place
+--FirstName LIKE 'a%h' --Starts with a and ends with h
+--FirstName LIKE '_l%' --Contains r at the 2nd place and followed by any letter
+--FirstName LIKE '[AB]%' --Starts with either A or B
+--FirstName LIKE '%[AB]' --Ends with either A or E
+FirstName LIKE '[a-e]%' --Starts with a to e, inclusive of e
+;
+
+-------------------------------------------------------
+
+Q: Min, max etc 
+
+DROP TABLE Win_Func_Practice
+CREATE TABLE Win_Func_Practice
+(
+Sno int,
+FirstName varchar(25),
+State varchar(5),
+Weight int,
+Age int,
+PersonID int
+);
+
+INSERT INTO Win_Func_Practice VALUES (1,'Johanne','A',65,24,1)
+INSERT INTO Win_Func_Practice VALUES (2,'Tihomir','B',82,35,2)
+INSERT INTO Win_Func_Practice VALUES (3,'Bartomeu','C',89,30,3)
+INSERT INTO Win_Func_Practice VALUES (4,'Shirli','A',65,24,1)
+INSERT INTO Win_Func_Practice VALUES (5,'Amirah','B',52,24,2)
+INSERT INTO Win_Func_Practice VALUES (6,'Aminath','C',69,42,3)
+INSERT INTO Win_Func_Practice VALUES (7,'Borghildur','A',50,45,1)
+INSERT INTO Win_Func_Practice VALUES (8,'Kleisthenes','B',84,34,2)
+INSERT INTO Win_Func_Practice VALUES (9,'Gisbert','C',50,42,3)
+INSERT INTO Win_Func_Practice VALUES (10,'Frodo','A',84,21,1)
+INSERT INTO Win_Func_Practice VALUES (11,'Quintilianus','B',60,33,2)
+INSERT INTO Win_Func_Practice VALUES (12,'Leonid','C',57,44,3)
+INSERT INTO Win_Func_Practice VALUES (13,'Hikmat','A',45,42,1)
+INSERT INTO Win_Func_Practice VALUES (14,'Eliou','B',53,36,2)
+INSERT INTO Win_Func_Practice VALUES (15,'Edorta','C',72,27,3)
+INSERT INTO Win_Func_Practice VALUES (16,'Eliou','A',54,36,2)
+INSERT INTO Win_Func_Practice VALUES (17,'Eliou','C',55,36,2)
+INSERT INTO Win_Func_Practice VALUES (18,'Eliou','',56,36,2)
+INSERT INTO Win_Func_Practice VALUES (19,'Eliou', NULL,56,36,2)
+
+
+SELECT 
+MIN(Age) as Minimum_age
+,MAX(Age) as Maximum_age
+,COUNT(Age) as Count_of_age
+,AVG(Age) as Average_age
+,SUM(Age) as Sum_of_age
+FROM Win_Func_Practice;
+
+-------------------------------------------------------
+
+
+Q: Select the top 5 rows
+
+SELECT TOP 5 *
+FROM Win_Func_Practice;
+-------------------------------------------------------
+
+
+Q: Select the last 5 rows
+SELECT TOP 5*
+FROM Win_Func_Practice order by Sno desc;
+-------------------------------------------------------
+
+
+Q: Usage of 1. WHERE clause 2. AND, OR, NOT IN operators
+
+SELECT *
+FROM Win_Func_Practice
+WHERE FirstName = 'Eliou' AND State = 'A' OR Age = 36 AND Weight NOT IN (54,55);
+-------------------------------------------------------
+
+
+Q: Usage of null
+
+SELECT * 
+FROM Win_Func_Practice
+WHERE State IS NULL;
+
+-------------------------------------------------------
+
+Q: Find the running total
+
+USE TempDb
+GO
+-- Create a Table
+CREATE TABLE EMPLOYEE_RUN_TOTAL(
+ID INT PRIMARY KEY,
+NAME NVARCHAR(50),
+GENDER NVARCHAR(50),
+SALARY INT
+)
+GO
+
+-- Insert Sample Data
+Insert Into EMPLOYEE_RUN_TOTAL Values (1, 'Mark', 'Male', 5000)
+Insert Into EMPLOYEE_RUN_TOTAL Values (2, 'John', 'Male', 4500)
+Insert Into EMPLOYEE_RUN_TOTAL Values (3, 'Pam', 'Female', 5500)
+Insert Into EMPLOYEE_RUN_TOTAL Values (4, 'Sara', 'Female', 4000)
+Insert Into EMPLOYEE_RUN_TOTAL Values (5, 'Todd', 'Male', 3500)
+Insert Into EMPLOYEE_RUN_TOTAL Values (6, 'Mary', 'Female', 5000)
+Insert Into EMPLOYEE_RUN_TOTAL Values (7, 'Ben', 'Male', 6500)
+Insert Into EMPLOYEE_RUN_TOTAL Values (8, 'Jodi', 'Female', 7000)
+Insert Into EMPLOYEE_RUN_TOTAL Values (9, 'Tom', 'Male', 5500)
+Insert Into EMPLOYEE_RUN_TOTAL Values (10, 'Ron', 'Male', 5000)
+
+select * from EMPLOYEE_RUN_TOTAL;
+
+
+select ERT.*, sum(SALARY) over (order by id) as Run_total
+from EMPLOYEE_RUN_TOTAL ERT;
 

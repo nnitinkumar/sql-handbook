@@ -1,4 +1,4 @@
-
+Q: Contest question
 
 CREATE TABLE contests(
 CONTEST_ID INT,
@@ -97,8 +97,8 @@ vs.total_unique_views is not null and
 (ss.total_submissions + ss.total_accepted_submissions + vs.total_views + vs.total_unique_views) >0
 ;
 
-
---Q: Draw The Triangle 1
+---------------------------------------------------------------
+Q: Draw The Triangle 1
 
 DECLARE @var int               -- Declare
 SELECT @var = 20               -- Initialization
@@ -108,7 +108,9 @@ PRINT replicate('* ', @var)    -- Print
 SET @var = @var - 1            -- decrement
 END
 
---Q: Draw The Triangle 2
+---------------------------------------------------------------
+
+Q: Draw The Triangle 2
 
 DECLARE @var int               -- Declare
 SELECT @var = 1               -- Initialization
@@ -118,8 +120,8 @@ PRINT replicate('* ', @var)    -- Print
 SET @var = @var + 1            -- decrement
 END
 
-
---Q: Print prime numbers
+---------------------------------------------------------------
+Q: Print prime numbers
 
 DECLARE @range_start int = 3;
 DECLARE @range_end int = 1000;
@@ -136,3 +138,91 @@ SET @range_start = @range_start + 1;
 END
 
 SELECT string_agg(n, '&') FROM prime_numbers;
+
+---------------------------------------------------------------
+
+Q: Self join
+
+USE TempDb
+GO
+-- Create a Table
+CREATE TABLE Students(
+ID INT PRIMARY KEY,
+Name NVARCHAR(50),
+)
+GO
+
+-- Create a Table
+CREATE TABLE Friends(
+ID INT PRIMARY KEY,
+FRIEND_ID INT,
+)
+GO
+--Drop table Friends
+
+-- Create a Table
+CREATE TABLE Packages(
+ID INT PRIMARY KEY,
+Salary INT,
+)
+GO
+
+-- Insert Sample Data
+INSERT INTO Students
+SELECT 1, 'Asley'
+UNION ALL
+SELECT 2, 'Samantha'
+UNION ALL
+SELECT 3, 'Julia'
+UNION ALL
+SELECT 4, 'Scarlet'
+GO
+
+--Select * from Students ;
+
+INSERT INTO Friends
+SELECT 1, 2
+UNION ALL
+SELECT 2, 3
+UNION ALL
+SELECT 3, 4
+UNION ALL
+SELECT 4, 1
+GO
+
+Select * from Friends;
+
+INSERT INTO Packages
+SELECT 1, 15.20
+UNION ALL
+SELECT 2, 10.06
+UNION ALL
+SELECT 3, 11.55
+UNION ALL
+SELECT 4, 12.12
+GO
+
+Select * from Packages;
+
+
+with J1
+as (
+select 
+S.NAME as NAMEOFTHEPERSON, 
+F.FRIEND_ID as HISBESTFRIENDSID,
+P.Salary as PERSONSSALARY
+from Students S
+inner join Friends F
+on S.ID = F.ID
+inner join Packages P
+on P.ID = S.ID
+)
+
+select NAMEOFTHEPERSON
+--J1.*, P.Salary as FRIENDSSALARY
+from J1
+inner join 
+Packages P
+On P.ID = J1.HISBESTFRIENDSID
+where P.Salary > PERSONSSALARY
+order by P.Salary;
