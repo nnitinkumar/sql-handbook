@@ -148,3 +148,72 @@ from Employee
 select isnull(salary,null) as SecondHighestSalary
 from cte_1
 where rn = 2;
+
+
+--196. Delete duplicate emails
+
+--SOURCE: https://stackoverflow.com/questions/18390574/how-to-delete-duplicate-rows-in-sql-server#:~:text=It%20can%20be%20done%20by,no%20duplicates%20as%20shown%20below.
+
+-----CASE1: When the id column is also repeating-----
+
+create table rider_info(
+user_id int,
+user_name varchar(100),
+pickup_loc varchar(100),
+drop_loc varchar(100)
+)
+go
+
+--DROP table rider_info;
+
+insert into rider_info values (1, 'Nitin', 'HRBR', 'Kalyan');
+insert into rider_info values (1, 'Nitin', 'HRBR', 'Kalyan');
+insert into rider_info values (1, 'Nitin', 'HRBR', 'Kalyan');
+insert into rider_info values (2, 'Reshma', 'Whitefield', 'HSR');
+insert into rider_info values (2, 'Reshma', 'Whitefield', 'HSR');
+insert into rider_info values (3, 'Anshuman', 'HSR', 'EC');
+
+
+with cte as(
+select 
+	t1.*,
+	row_number()over(partition by user_id order by user_id) as rn
+from rider_info t1
+)
+delete from cte where rn > 1;
+
+
+select * from rider_info;
+
+
+-----CASE2: When the id column is different even for repeating records-----
+
+create table rider_info_diff_userid(
+user_id int,
+user_name varchar(100),
+pickup_loc varchar(100),
+drop_loc varchar(100)
+)
+go
+
+--DROP table rider_info_diff_userid;
+
+insert into rider_info_diff_userid values (1, 'Nitin', 'HRBR', 'Kalyan');
+insert into rider_info_diff_userid values (2, 'Nitin', 'HRBR', 'Kalyan');
+insert into rider_info_diff_userid values (3, 'Nitin', 'HRBR', 'Kalyan');
+insert into rider_info_diff_userid values (4, 'Reshma', 'Whitefield', 'HSR');
+insert into rider_info_diff_userid values (5, 'Reshma', 'Whitefield', 'HSR');
+insert into rider_info_diff_userid values (6, 'Anshuman', 'HSR', 'EC');
+
+select * from rider_info_diff_userid;
+
+
+delete --delete command
+	p1 --this is an entire table 
+from 
+	rider_info_diff_userid p1, --table aliased as p1
+	rider_info_diff_userid p2  --there are two tables in from statement and no join is happening explictly 
+where 
+	p1.user_name = p2.user_name --common column which is repeating
+	and
+	p1.user_id > p2.user_id; --picking the different user ids
