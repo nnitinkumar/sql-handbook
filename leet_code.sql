@@ -217,3 +217,39 @@ where
 	p1.user_name = p2.user_name --common column which is repeating
 	and
 	p1.user_id > p2.user_id; --picking the different user ids
+
+
+
+------------------------------------------
+
+--180: Consecutive numbers 
+
+USE TempDB
+create table consecutive_nums(
+id_id int,
+num_num int,  
+)
+go
+
+
+
+insert into consecutive_nums values (1, 1);
+insert into consecutive_nums values (2, 1);
+insert into consecutive_nums values (3, 1);
+insert into consecutive_nums values (4, 2);
+insert into consecutive_nums values (5, 3);
+insert into consecutive_nums values (6, 4);
+insert into consecutive_nums values (7, 4);
+insert into consecutive_nums values (8, 4);
+insert into consecutive_nums values (9, 4);
+insert into consecutive_nums values (10, 4);
+
+
+
+select distinct l1.num_num as consecutivenums 
+from consecutive_nums l1
+join consecutive_nums l2 on l1.num_num = l2.num_num
+join consecutive_nums l3 on l2.num_num = l3.num_num
+where (l1.id_id + 1) = l2.id_id 
+       and (l2.id_id + 1) = l3.id_id
+;

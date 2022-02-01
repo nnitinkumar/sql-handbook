@@ -566,3 +566,38 @@ select * from EMPLOYEE_RUN_TOTAL;
 select ERT.*, sum(SALARY) over (order by id) as Run_total
 from EMPLOYEE_RUN_TOTAL ERT;
 
+--------------------------------------------------------
+
+--Number of new customer in each day 
+
+USE TempDB
+create table phone_pe_customers(
+txn_id int,
+pp_user_id int,
+pp_user_name varchar(10),
+txn_date date   
+)
+go
+
+--drop table phone_pe_customers;
+
+insert into phone_pe_customers values (1, 1, 'Rose', '20220101 10:34:09 AM');
+insert into phone_pe_customers values (2, 1, 'Rose', '20220102 10:34:09 AM');
+insert into phone_pe_customers values (1, 2, 'Angela', '20220102 10:34:09 AM');
+insert into phone_pe_customers values (2, 2, 'Angela', '20220102 10:40:09 AM');
+insert into phone_pe_customers values (3, 2, 'Angela', '20220103 10:34:09 AM');
+insert into phone_pe_customers values (1, 3, 'Frank', '20220105 10:34:09 AM');
+insert into phone_pe_customers values (1, 4, 'Anshuman', '20220107 10:34:09 AM');
+insert into phone_pe_customers values (1, 5, 'Sagar', '20220108 10:34:09 AM');
+insert into phone_pe_customers values (1, 6, 'Nitin', '20220102 10:34:09 AM');
+insert into phone_pe_customers values (1, 5, 'Sagar', '20220108 10:34:09 AM');
+
+
+
+select mindate, count(distinct pp_user_id) 
+from (
+select pp_user_id,
+	min(txn_date) as mindate
+from phone_pe_customers
+group by pp_user_id) xx
+group by xx.mindate;
