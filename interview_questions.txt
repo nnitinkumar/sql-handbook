@@ -601,3 +601,52 @@ select pp_user_id,
 from phone_pe_customers
 group by pp_user_id) xx
 group by xx.mindate;
+
+
+--------------------------------------------------------
+
+Q: What are the types of indexes in sql?
+
+1. Clustered index
+-Defines the order in which data is physically stored in a table
+-There can be only one clustered index per table
+-In SQL server, the primary key constraint automatically creates a clustered
+index on that particular column
+
+2. Non clustered index
+-Doesn't sort the physical data inside the table
+-A non clustered index is stored at one place and table data is stored in another place
+Similar to a textbook, where the book content is located in one place and the index is
+located in another.
+-More than one non-clustered index per table is possible
+-Non clustered indexes are slower than clustered indexes
+
+
+Source : https://www.sqlshack.com/what-is-the-difference-between-clustered-and-non-clustered-indexes-in-sql-server/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
