@@ -639,4 +639,13 @@ Q: Why we need a key?
 2. Allows you to establish relationship between tables
 3. Helps you to enforce identity and integrity in the relationship
 
+Q: What are the different types of indexes in sql?
+
+1.Clustered 
+2.Non clustered
+3.Unique
+4.Filtered
+5.Columnstore
+6.Hash 
+
 
