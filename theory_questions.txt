@@ -648,4 +648,9 @@ Q: What are the different types of indexes in sql?
 5.Columnstore
 6.Hash 
 
+Q: What is data wrangling?
+
+Data wrangling or data munging is the process of transforming data into a format that makes it easier to work with.
+This might mean modifying all of the values in a given column in a certain way, or merging multiple columns together. 
+The necessity for data wrangling is often a biproduct of poorly collected or presented data. 
 
